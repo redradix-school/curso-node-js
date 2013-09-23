@@ -1,0 +1,11 @@
+body{margin: 0; padding: 0; background: #f1f1f1; font-family: 'Montserrat', sans-serif; font-weight: 400; color: #5f6060;}
+
+.wrapper{position: relative; width: 430px; margin: 100px auto 0; text-align: center;}
+.logo{margin: 12px 0;}
+
+#profile{background: #fff; padding: 26px;}
+#profile h1{margin: 30px 0 2px; font-weight: 700; font-size: 28px; color: #424242;}
+#profile h2{margin: 0 0 40px; font-weight: 400; font-size: 20px; color: #777;}
+#profile .button{display: block; width: 272px; height: 56px; margin: 0 auto; background: #cb2128; border-bottom: 4px solid #901a1c; color: #fff; text-decoration: none; text-transform: uppercase; text-align: left;}
+#profile .button img{vertical-align: middle;}
+#profile .button span{display: inline-block; vertical-align: middle; font-size: 22px; padding: 0 38px;}
