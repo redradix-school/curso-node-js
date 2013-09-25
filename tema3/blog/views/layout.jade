@@ -1,0 +1,21 @@
+!!! 5
+html(lang='es')
+head
+    meta(charset='utf-8')
+    title Lista de Posts
+    meta(name='description', content='')
+    meta(property='og:image', content='')
+    // Fonts
+    link(href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,400italic,300italic', rel='stylesheet', type='text/css')
+    // Frameworks
+    link(rel='stylesheet', href='/css/normalize.css')
+    // Stylesheets
+    link(rel='stylesheet', href='/css/styles.css', media='screen')
+  body.post-list
+    header
+      .top
+        h1 Mi Blog
+        .newpost
+          a(href='/posts/new') Nuevo Post
+      block nav
+    block content

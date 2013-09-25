@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    section.login.container
+      h1.section-title Registro de Usuario
+      form.login-form(action="/register", method="POST")
+        label(for='email') Email
+        input.email(type='email', name='username')
+        label(for='password') Contraseña
+        input.password(type='password', name='password')
+        label(for='password') Confirma tu contraseña
+        input.password(type='password', name='passwordconfirm')
+        input.button.login(type='submit', value='Enviar')
+
+    section
+      a(href="/login") ¿Ya tienes usuario?
