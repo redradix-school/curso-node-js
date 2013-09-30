@@ -1,0 +1,26 @@
+extends layout
+
+block buttons
+  .newpost
+    a(href='/urls/new') Nueva URL
+  .logout
+    a(href='/logout') Logout
+
+block nav
+  nav.menu
+    ul
+      li
+        a(href='/urls') Volver
+      li
+        a(href='/urls/#{url.code}/edit') Editar
+      li
+        form(action="/urls/#{url.code}",method="POST",id="form-delete")
+          input(type="hidden",name="_method",value="delete")
+        a(href='#',onclick="document.getElementById('form-delete').submit()") Eliminar
+
+block content
+  section.login
+    .section-title
+      h1 http://#{host}/#{url.code}
+    h4= url.original
+    p Visitas: #{url.visits}

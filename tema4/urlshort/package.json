@@ -1,0 +1,12 @@
+{
+  "name": "redradix-nodejs-urlshort",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "q": "*",
+    "jade": "*",
+    "express": "*",
+    "hiredis": "*",
+    "redis": "*"
+  }
+}

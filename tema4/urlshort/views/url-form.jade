@@ -1,0 +1,23 @@
+extends layout
+
+block buttons
+  .newpost
+    a(href='/urls/new') Nueva URL
+  .logout
+    a(href='/logout') Logout
+
+block nav
+  nav.menu
+    ul
+      li
+        a(href='/urls') Volver
+
+block content
+  section.login
+    .section-title
+      h1= url.code? "Editar URL "+url.code : "Nueva URL"
+    form.login-form(action=url.code? "/urls/#{url.code}" : "/urls", method="POST")
+      input(type="text", name="original", placeholder="url", value=url.original, style="height:45px; margin-top:13px; width:480px")
+      if url.code
+        input(type="hidden", name="_method", value="put")
+      input.button(type="submit")
