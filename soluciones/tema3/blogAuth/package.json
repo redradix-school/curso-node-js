@@ -1,0 +1,9 @@
+{
+  "name": "redradix-nodejs-simpleblog",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "jade": "*",
+    "express": "*"
+  }
+}

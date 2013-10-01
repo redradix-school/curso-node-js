@@ -1,0 +1,25 @@
+extends layout
+
+block nav
+  nav.menu
+    ul
+      li
+        a(href='/posts') Volver
+      li
+        a(href='/posts/#{post.id}/edit') Editar
+      li
+        form(action="/posts/#{post.id}",method="POST",id="form-delete")
+          input(type="hidden",name="_method",value="delete")
+        a(href='#',onclick="document.getElementById('form-delete').submit()") Eliminar
+
+block content
+  section.posts
+    article.post
+      .container
+        h1.post-title= post.title
+        p= post.content
+          aside.metadata
+            | Por
+            a(href='#') &nbsp;Default User
+            span.sep &nbsp; | &nbsp;
+            | 0 visitas
