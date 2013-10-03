@@ -1,0 +1,13 @@
+{
+  "name": "redradix-nodejs-digg",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "*",
+    "jade": "*",
+    "mongodb": "*",
+    "nodemailer": "*",
+    "validator": "*",
+    "q": "*"
+  }
+}
