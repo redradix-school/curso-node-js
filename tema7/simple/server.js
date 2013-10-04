@@ -14,8 +14,8 @@ function extend() {
 
 function gravatar(email, s) {
   var baseUrl = "http://www.gravatar.com/avatar/",
-      email = user.email.toLowerCase().trim(),
-      hash = crypto.createHash("md5").update(email).digest("hex")
+      parEmail = email.toLowerCase().trim(),
+      hash = crypto.createHash("md5").update(parEmail).digest("hex")
   return baseUrl + hash + (s? "s="+s : "")
 }
 
