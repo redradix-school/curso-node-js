@@ -1,5 +1,6 @@
 var express = require("express"),
     app = express(),
+    crypto = require("crypto"),
     server = require("http").createServer(app),
     io = require("socket.io").listen(server);
 
@@ -10,6 +11,14 @@ function extend() {
     return acc;
   });
 }
+
+function gravatar(email, s) {
+  var baseUrl = "http://www.gravatar.com/avatar/",
+      email = user.email.toLowerCase().trim(),
+      hash = crypto.createHash("md5").update(email).digest("hex")
+  return baseUrl + hash + (s? "s="+s : "")
+}
+
 app.configure(function() {
   app.use(express.favicon());
   app.use(express.bodyParser());
