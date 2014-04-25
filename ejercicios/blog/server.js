@@ -103,6 +103,21 @@ function resources(app, name, controller) {
 resources(app, "posts", postsController);
 
 app.use(express.static(__dirname + "/public"));
+app.get("/pete", function() {
+  throw new Error("Oh, no!");
+});
+
+/* Errors */
+
+app.use(function(req, res, next) {
+  res.send(404, "Pagina no encontrada");
+});
+
+app.use(function(err, req, res, next) {
+  console.log(req.url, Date.now(), err.message);
+  res.send(500, "Ocurrio algun error..");
+});
+
 app.listen(3000);
 
 /* Populate */

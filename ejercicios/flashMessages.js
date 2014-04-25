@@ -20,7 +20,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-
 app.get("/test", function(req, res) {
   var random = Math.random();
   if (random > 0.5) {
@@ -34,11 +33,6 @@ app.get("/test", function(req, res) {
 app.get("/test2", function(req, res) {
   var message = req.flash.message();
   res.send(200, req.flash.message());
-});
-
-app.use(function(err, req, res, next) {
-  console.log("Error!");
-  res.send("error!");
 });
 
 app.listen(3000);
