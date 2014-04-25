@@ -1,18 +1,16 @@
 var express = require("express"),
     app = express();
 
-app.configure(function() {
-  app.use(express.favicon());
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(express.cookieParser("secreto"));
-  app.use(express.cookieSession({secret: "asdf"}));
-  app.engine("jade", require("jade").__express);
-  app.set("views", "./views");
-  app.set("view engine", "jade");
-  app.use(app.router);
-  app.use(express.static(__dirname + "/public"));
-});
+
+app.use(express.favicon());
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+app.use(express.cookieParser("secreto"));
+app.use(express.cookieSession({secret: "asdf"}));
+app.engine("jade", require("jade").__express);
+app.set("views", "./views");
+app.set("view engine", "jade");
+
 
 function extend() {
   var args = [].slice.call(arguments);
@@ -63,9 +61,11 @@ extend(Post.prototype, {
 /* Tu código aquí! */
 
 
-app.listen(3000)
+
+app.use(express.static(__dirname + "/public"));
+app.listen(3000);
 
 /* Populate */
 
-var post = new Post({title: "Prueba", content: "Esto es una prueba"})
-post.save()
+var post = new Post({title: "Prueba", content: "Esto es una prueba"});
+post.save();
