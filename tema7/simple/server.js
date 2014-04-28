@@ -15,8 +15,8 @@ function extend() {
 function gravatar(email, s) {
   var baseUrl = "http://www.gravatar.com/avatar/",
       parEmail = email.toLowerCase().trim(),
-      hash = crypto.createHash("md5").update(parEmail).digest("hex")
-  return baseUrl + hash + (s? "s="+s : "")
+      hash = crypto.createHash("md5").update(parEmail).digest("hex");
+  return baseUrl + hash + (s? "s="+s : "");
 }
 
 app.configure(function() {
@@ -33,13 +33,26 @@ app.configure(function() {
 
 /* Routas */
 
-app.post("/session", function(req, res) {
+var userData = {}
 
+app.post("/session", function(req, res) {
+  req.session.nick = req.body.nick;
+  req.session.avatar = gravatar(req.body.gravatar, 50);
+  res.redirect("/chat.html")
 });
 
+app.get("/me", function(req, res) {
+  res.send({name: req.session.nick, avatar: req.session.avatar})
+})
 
 app.use(function(req, res) { res.redirect("/login.html"); });
 
 /* WebSockets */
+
+io.sockets.on("connection", function(socket) {
+  socket.on("send:message", function(user, msgData) {
+    socket.broadcast.emit("posted:message", user, msgData)
+  })
+})
 
 server.listen(3000);

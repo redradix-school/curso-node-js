@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  section.posts
+    each post in posts
+      article.post
+        .container
+          h2.post-title
+            a(href='/posts/#{post.id}')= post.title
+          p.summary= post.content.slice(0, 150)
+          aside.metadata
+            | Por
+            a(href='#') &nbsp;Default User
+            span.sep &nbsp; | &nbsp;
+            | 0 visitas
