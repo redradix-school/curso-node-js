@@ -20,6 +20,16 @@ app.use(function(req, res, next) {
   next();
 });
 
+// Esto es para Santiago:
+app.use(function(req, res, next) {
+  var realSend = res.send;
+  res.send = function() {
+    console.log(arguments);
+    return realSend.apply(res, arguments);
+  };
+  next();
+});
+
 app.get("/test", function(req, res) {
   var random = Math.random();
   if (random > 0.5) {

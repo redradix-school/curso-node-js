@@ -1,7 +1,12 @@
 "use strict";
 
 var express = require("express"),
-    app = express();
+    app = express(),
+    Q = require("q"),
+    redis = require("redis"),
+    client = redis.createClient(),
+    op = Q.ninvoke.bind(Q, client),
+    auth = require("./simpleAuth");
 
 app.use(require("static-favicon")());
 app.use(require("body-parser")());
@@ -20,44 +25,15 @@ function extend() {
 
 /* Models */
 
-var Post = function(data) {
-  data = extend({}, {title: "", content: "", date: Date.now(), views: 0}, data);
-  extend(this, data);
-}
-extend(Post, {
-  _posts: [],
-  _id: 0,
-  find: function(id) {
-    return this._posts.filter(function(p) { return p.id == id })[0];
-  },
-  getAll: function() {
-    return this._posts;
-  }
-});
-extend(Post.prototype, {
-  save: function() {
-    this.id = Post._id++;
-    Post._posts.push(this);
-  },
-  update: function() {
-    var posts = Post._posts;
-    for (var i=0,_len=posts.length; i<_len; i++) if (posts[i].id === this.id) {
-      posts.splice(i, 1, this);
-      break;
-    }
-  },
-  delete: function() {
-    var posts = Post._posts;
-    for (var i=0,_len=posts.length; i<_len; i++) if (posts[i].id === this.id) {
-      posts.splice(i, 1);
-      break;
-    }
-  }
-});
+var postsKey = "blog:posts";
 
 var postsController = {
   index: function(req, res) {
-    res.render("post-list", {posts: Post.getAll()});
+    op("lrange", postsKey, 0, -1)
+      .then(function(posts) {
+        posts = posts.map(JSON.parse);
+        res.render("post-list", {posts: posts});
+      });
   },
   show: function(req, res) {
     res.render("post-detail", {post: req.post});
@@ -66,9 +42,16 @@ var postsController = {
     res.render("new-post", {post: {}});
   },
   create: function(req, res) {
-    var post = new Post({title: req.body.title, content: req.body.content});
-    post.save();
-    res.render("post-detail", {post: post});
+    var post = {title: req.body.title, content: req.body.content};
+    op("llen", postsKey)
+      .then(function(len) {
+        post.id = len;
+        return op("rpush", postsKey, JSON.stringify(post));
+      })
+      .then(function() {
+        res.render("post-detail", {post: post});
+      })
+      .done();
   },
   edit: function(req, res) {
     res.render("new-post", {post: req.post});
@@ -76,16 +59,23 @@ var postsController = {
   update: function(req, res) {
     req.post.title = req.body.title;
     req.post.content = req.body.content;
-    req.post.update();
-    res.render("post-detail", {post: post});
+    op("lset", postsKey, req.post.id, JSON.stringify(post))
+      .then(function() {
+        res.render("post-detail", {post: post});
+      })
+      .done();
   },
   "delete": function(req, res) {
-    req.post.delete();
+
     res.redirect("/posts");
   },
   param: function(req, res, next, postId) {
-    req.post = Post.find(postId);
-    next();
+    op("lindex", postsKey, postsId)
+      .then(function(post) {
+        req.post = JSON.parse(post);
+        next();
+      })
+      .done();
   }
 };
 
