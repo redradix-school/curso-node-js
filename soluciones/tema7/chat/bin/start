@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+
+var server = require('../app');
+server.listen(process.env.PORT || 3000);
