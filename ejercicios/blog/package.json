@@ -4,6 +4,11 @@
   "private": true,
   "dependencies": {
     "jade": "*",
-    "express": "*"
+    "express": "*",
+    "static-favicon": "*",
+    "body-parser": "*",
+    "method-override": "*",
+    "hiredis": "*",
+    "q": "*"
   }
 }

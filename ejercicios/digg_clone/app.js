@@ -58,7 +58,6 @@ auth.setStrategy({
   deserializeUser: function(userToken, cb) {
   },
   checkCredentials: function(username, pass, cb) {
-    // models.user("findOne")
   }
 });
 
