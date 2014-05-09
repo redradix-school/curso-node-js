@@ -1,0 +1,28 @@
+extends layout
+
+block buttons
+  .newpost
+    a(href='/urls/new') Nueva URL
+  .logout
+    a(href='/logout') Logout
+
+block content
+  section.url-list.container
+    table
+      thead
+        th.long URL original
+        th Creado
+        th URL corta
+        th Visitas
+        th Detalles
+      each url in urls
+        tr
+          td: a(href=url.original)= url.original
+          if url.date
+            - var d = new Date(url.date)
+            td #{d.getDate()}/#{d.getMonth()}/#{d.getFullYear()}
+          else
+            td --
+          td: a(href="/#{url.code}") http://#{host}/#{url.code}
+          td= url.visits
+          td: a(href="/urls/#{url.code}") Detalles

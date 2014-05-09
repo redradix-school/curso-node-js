@@ -1,0 +1,17 @@
+{
+  "name": "redradix-nodejs-urlshort",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "q": "*",
+    "jade": "*",
+    "express": "*",
+    "hiredis": "*",
+    "redis": "*",
+    "serve-favicon": "*",
+    "body-parser": "*",
+    "method-override": "*",
+    "cookie-parser": "*",
+    "cookie-session": "*"
+  }
+}

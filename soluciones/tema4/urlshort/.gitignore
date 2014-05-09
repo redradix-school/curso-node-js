@@ -1,0 +1,13 @@
+# Exclude vim temp files
+*.swp
+*.swo
+# Databases
+*.sqlite
+# Exclude OS X folder attributes
+.DS_Store
+# Exclude npm packages
+node_modules
+# Exclude REDIS dumps
+dump.rdb
+Vagrantfile
+.vagrant
