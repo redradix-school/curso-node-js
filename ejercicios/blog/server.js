@@ -13,7 +13,7 @@ app.use(require("body-parser")());
 app.use(require("method-override")());
 app.engine("jade", require("jade").__express);
 app.set("views", "./views");
-app.set("view engine", "jade");
+app.set("viewy engine", "jade");
 
 function extend() {
   var args = [].slice.call(arguments);

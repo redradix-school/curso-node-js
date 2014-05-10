@@ -4,6 +4,11 @@
   "private": true,
   "dependencies": {
     "jade": "*",
-    "express": "*"
+    "express": "*",
+    "method-override": "^1.0.0",
+    "cookie-parser": "^1.0.1",
+    "morgan": "^1.0.1",
+    "cookie-session": "^1.0.2",
+    "body-parser": "^1.0.2"
   }
 }
