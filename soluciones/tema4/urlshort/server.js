@@ -11,6 +11,7 @@ app.use(require("body-parser")());
 app.use(require("method-override")());
 app.use(require("cookie-parser")("secreto"));
 app.use(require("cookie-session")({secret: "asdf"}));
+app.use(require("morgan")("short"));
 app.engine("jade", require("jade").__express);
 app.set("views", "./views");
 app.set("view engine", "jade");
@@ -26,11 +27,6 @@ function extend() {
 }
 
 var op = Q.ninvoke.bind(Q, client);
-
-// Be careful with this
-Object.prototype.toJSON = function() {
-  return JSON.stringify(this);
-};
 
 /* Models */
 
@@ -87,8 +83,10 @@ extend(User, {
 });
 
 var Url = function(data, userId) {
-  data = extend({}, {code: Date.now().toString(36), userId: userId, visits: 0}, data);
-  return Model.call(this, data);
+  Model.call(this, data);
+  extend(this,
+         extend({code: Date.now().toString(36), userId: userId, visits: 0},
+                this));
 };
 inherits(Url, Model);
 
@@ -103,7 +101,7 @@ extend(Url.prototype, {
     return op("set", this.genKey(), this)
       .then(function() {
         return op("rpush", this.genListKey(), this.code);
-      }).bind(this);
+      }.bind(this));
   },
   update: function() {
     return op("set", this.genKey(), this);
@@ -117,7 +115,7 @@ extend(Url, {
   find: function(code) {
     return op("get", Url.prototype.genKey(code))
       .then(function(data) {
-        return new Url(data);
+        return data? new Url(data) : null;
       });
   },
   findForUser: function(username) {
@@ -132,7 +130,7 @@ extend(Url, {
       codes.map(function(code) {
         return op("get", Url.prototype.genKey(code))
           .then(function(urlData) {
-            return new Url(data);
+            return new Url(urlData);
           });
       })
     );
@@ -198,7 +196,6 @@ var usersController = {
         res.redirect("/urls");
       })
       .fail(function(err) {
-        console.log(err);
         res.redirect("/register");
       })
       .done();
@@ -224,22 +221,30 @@ var urlsController = {
       .done();
   },
   show: function(req, res) {
-    res.render("url-show", {url: req.url, host: req.headers.host});
+    res.render("url-show", {url: req.urlModel, host: req.headers.host});
   },
   edit: function(req, res) {
-    res.render("url-form", {url: req.url});
+    res.render("url-form", {url: req.urlModel});
   },
   update: function(req, res) {
-    req.url.original = req.body.original;
-    req.url.update()
-      .then(res.redirect.bind(res, "/urls/" + req.url.code))
-      .fail(res.redirect.bind(res, "/urls/" + req.url.code + "/edit"))
+    req.urlModel.original = req.body.original;
+    req.urlModel.update()
+      .then(function() {
+        res.redirect("/urls/"+req.urlModel.code);
+      })
+      .fail(function() {
+        res.redirect("/urls/"+req.urlModel.code+"/edit");
+      })
       .done();
   },
   "delete": function(req, res) {
-    Url.delete(req.url)
-      .then(res.redirect.bind(res, "/urls"))
-      .fail(res.redirect.bind(res, "/urls"))
+    Url.delete(req.urlModel)
+      .then(function() {
+        res.redirect("/urls");
+      })
+      .fail(function() {
+        res.redirect("/urls");
+      })
       .done();
 
   },
@@ -262,7 +267,7 @@ var urlsController = {
     Url.find(code)
       .then(function(url) {
         if (!url) { throw new Error("URL no encontrada"); }
-        req.url = url;
+        req.urlModel = url;
         next();
       })
       .fail(next)
@@ -294,17 +299,19 @@ auth.withSession(app, function(app) {
   resources(app, "urls", urlsController);
 });
 
-app.use(urlsController.navigate);
-
 /* Ficheros estaticos */
 
 app.use(express.static(__dirname + "/public"));
 
-/* Manejo de errores */
+/* Middleware de redireccion */
+
+app.use(urlsController.navigate);
+
+/* Arrancamos el servidor */
 
 app.listen(3000);
 
 /* Populate */
 
 var admin = new User({username: "eliasagc@gmail.com", password: "asdf"});
-admin.save();
+admin.save().done();
