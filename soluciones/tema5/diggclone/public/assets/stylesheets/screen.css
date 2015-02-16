@@ -1,0 +1,115 @@
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section, summary { display: block; }
+
+html { font-family: sans-serif; font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body { margin: 0; font-family: "Roboto", sans-serif; color: black; line-height: normal; background: white; }
+
+a { color: #6bcdf0; text-decoration: none; }
+
+a:hover { color: #505050; }
+
+a:active, a:hover, a:focus { outline: 0; }
+
+h1, h2, h2, h3, h4, h6 { margin: 0; font-weight: normal; line-height: 1; }
+
+p { margin: 0; padding: 0 0 10px; line-height: 1.2em; }
+
+ul, ol { list-style: none; margin: 0; padding: 0; }
+
+a, img { border: 0; }
+
+img { vertical-align: middle; max-width: 100%; height: auto; }
+
+iframe { max-width: 100%; }
+
+figure { margin: 0; }
+
+/*::selection background: $highlight color: #FFF ::-moz-selection background: $highlight color: #FFF */
+form { margin: 0; }
+
+fieldset { margin: 0; padding: 0; border: 0; }
+
+legend { border: 0; padding: 0; white-space: normal; }
+
+button, input, select, textarea { font-family: inherit; font-size: 100%; margin: 0; border-radius: 0; -moz-border-radius: 0; -webkit-border-radius: 0; }
+
+button, input { line-height: normal; }
+
+button, input[type="submit"] { -webkit-appearance: none; }
+
+input[type="text"], input[type="password"] { -webkit-appearance: none; }
+
+input[type="checkbox"], input[type="radio"] { box-sizing: border-box; padding: 0; }
+
+input[type="search"] { -webkit-appearance: none; -moz-box-sizing: content-box; -webkit-box-sizing: content-box; box-sizing: content-box; }
+
+input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; }
+
+button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
+
+input:focus { outline: none; }
+
+textarea { overflow: auto; vertical-align: top; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+
+.accesible { display: none; }
+
+.button { display: block; background: #6bcdf0; color: white; text-transform: uppercase; font-size: 1.125em; padding: 10px 22px; margin-top: 10px; border: none; }
+
+.wrapper { position: relative; width: 960px; margin: 0 auto; }
+.wrapper:after { content: "."; display: block; height: 0; overflow: hidden; clear: both; zoom: 1; }
+
+#header { background: #3f3f3f; padding: 20px 0; }
+#header h1 { color: white; float: left; }
+#header .user-tools { float: right; margin-top: 6px; }
+#header .user-tools li { float: left; color: #c6c6c6; padding: 0 8px; border-right: 1px solid; }
+#header .user-tools li:last-child { border: none; }
+#header .user-tools a { color: #c6c6c6; }
+
+.subheader { background: #f8f8f8; border-bottom: 1px solid #efefef; }
+.subheader .add { position: relative; float: right; }
+.subheader .add a { font-size: 1.375em; }
+.subheader .add .modal { display: none; position: absolute; right: 0; top: 62px; padding: 20px; background: white; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); width: 500px; z-index: 100; }
+.subheader .add .modal form { position: relative; }
+.subheader .add .modal form input[type="text"], .subheader .add .modal form textarea { background: white; border: 1px solid #c6c6c6; padding: 6px; margin: 5px 0; width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+.subheader .add .modal form .button { width: 100%; }
+.subheader .add.active .modal { display: block; }
+.subheader .mod-tabs { float: left; }
+.subheader .mod-tabs li { float: left; border-right: 1px solid #efefef; }
+.subheader .mod-tabs li a { display: block; color: #c6c6c6; text-transform: uppercase; font-size: 1.375em; padding: 20px; }
+.subheader .mod-tabs li.active, .subheader .mod-tabs li:hover { background: #f0f0f0; box-shadow: inset 0px 0px 4px 0px rgba(0, 0, 0, 0.15); -webkit-box-shadow: inset 0px 0px 4px 0px rgba(0, 0, 0, 0.15); }
+.subheader .mod-tabs li.active a, .subheader .mod-tabs li:hover a { color: #3f3f3f; }
+
+.vote { position: absolute; top: 30px; left: 0; margin-right: 20px; border: solid 1px #6bcdf0; text-align: center; }
+.vote .votes { background: #6bcdf0; color: white; padding: 8px 15px; font-size: 0.875em; }
+.vote .votes strong { font-size: 1.375em; display: block; }
+.vote .actions a { border: solid 1px #6bcdf0; float: left; padding: 4px 0; width: 50%; font-size: 1.375em; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+
+.post { padding: 30px 0 30px 80px; border-bottom: 1px solid #efefef; position: relative; }
+.post h1 { font-size: 2.5em; font-weight: 300; color: #333333; margin-bottom: 12px; }
+.post h1 a { color: #333333; }
+.post p { color: #959595; }
+.post .meta { padding: 4px; font-size: 0.875em; }
+.post .meta .user { margin-left: 12px; }
+.post a.visit { text-align: center; width: 40%; margin: 10px 0 20px; }
+
+.comments { margin-top: 20px; }
+.comments h3 { font-size: 1.625em; font-weight: 300; margin-bottom: 20px; }
+.comments form { background-color: #f3f3f3; padding: 20px; margin: 0 0 20px 0; }
+.comments form:after { content: "."; display: block; height: 0; overflow: hidden; clear: both; zoom: 1; }
+.comments form input[type="text"], .comments form input[type="password"], .comments form textarea { background: white; border: 1px solid #c6c6c6; padding: 6px; margin: 5px 0; width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+.comments form .button { float: right; }
+.comments .commentlist li { padding: 20px 0 20px 80px; position: relative; border-bottom: solid 1px #dfdfdf; }
+.comments .commentlist li .vote { top: 10px; }
+.comments .commentlist li .user { font-size: 0.875em; color: #959595; }
+.comments .commentlist li .date { font-size: 0.875em; color: #959595; }
+
+.tab { display: none; }
+.tab.active { display: block; }
+
+.pagination { margin: 20px 0; text-align: right; }
+.pagination li { display: inline-block; background: #f1f1f1; font-size: 1.125em; }
+.pagination li a, .pagination li span { padding: 4px 10px; display: block; color: #959595; }
+.pagination li.active, .pagination li:hover { background: #6bcdf0; }
+.pagination li.active a, .pagination li.active span, .pagination li:hover a, .pagination li:hover span { color: white; font-weight: bold; }

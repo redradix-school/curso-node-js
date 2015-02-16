@@ -1,0 +1,10 @@
+{
+  "name": "redradix-nodejs-versionserver",
+  "version": "0.0.1",
+  "author": "Elías Alonso <elias@redradix.com>",
+  "description": "Servidor de ficheros con versionado",
+  "main": "./server",
+  "dependencies" : {
+    "Q": "*"
+  }
+}

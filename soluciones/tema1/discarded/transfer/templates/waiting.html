@@ -1,0 +1,14 @@
+<html>
+  <body>
+    <p>
+      Tu token es {{token}}
+    </p>
+    <p>
+      Tienes {{clients}} clientes esperando.
+    </p>
+    <form action="/upload?token={{token}}">
+      <input type="file" name="file"></input>
+      <input type="submit" value="Transferir"></input>
+    </form>
+  </body>
+</html>
