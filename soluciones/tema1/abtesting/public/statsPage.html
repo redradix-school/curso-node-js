@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>StatsPage</title>
+    <style type="text/css" media="screen">
+
+        body{margin: 0; padding: 0; background: #f1f1f1; font-family: 'Montserrat', sans-serif; font-weight: 400; color: #5f6060;}
+
+        .wrapper{position: relative; width: 730px; margin: 100px auto 0; text-align: center;}
+        .logo{margin: 12px 0;}
+
+        #profile{background: #fff; padding: 26px;}
+        #profile h1{margin: 30px 0 2px; font-weight: 700; font-size: 28px; color: #424242;}
+        #profile h2{margin: 0 0 40px; font-weight: 400; font-size: 20px; color: #777;}
+        #profile .button{display: block; width: 272px; height: 56px; margin: 0 auto; background: #cb2128; border-bottom: 4px solid #901a1c; color: #fff; text-decoration: none; text-transform: uppercase; text-align: left;}
+        #profile .button img{vertical-align: middle;}
+        #profile .button span{display: inline-block; vertical-align: middle; font-size: 22px; padding: 0 38px;}
+
+        .bar { width: 0%; height: 30px; text-align: left; }
+        .red { background-color: red; }
+        .blue { background-color: blue; }
+        .green { background-color: green; }
+        .purple { background-color: purple; }
+        li { overflow: hidden; margin-bottom: 10px; text-align: left; }
+        li span { float: left; font-weight: bold; padding: 0 5px; line-height: 30px; color: white; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;  }
+        ul { list-style: none; }
+
+    </style>
+  </head>
+
+  <body>
+
+    <div class="wrapper">
+      <div class="logo"><h1>Stats</h1></div>
+        <div id="profile">
+          <ul>
+            <li>
+              <span>A</span>
+              <span id="A-status"></span>
+              <div>
+                <div class="bar red" id="A">
+                </div>
+              <div>
+            </li>
+            <li>
+              <span>B</span>
+              <span id="B-status"></span>
+              <div class="bar blue" id="B">
+              </div>
+            </li>
+            <li>
+              <span>C</span>
+              <span id="C-status"></span>
+              <div class="bar green" id="C"></div>
+            </li>
+            <li>
+              <span>D</span>
+              <span id="D-status"></span>
+              <div class="bar purple" id="D">
+              </div>
+            </li>
+          </ul>
+        </div> <!-- #profile -->
+    </div> <!-- wrapper -->
+
+    <script>
+      function processData(response) {
+        var data = JSON.parse(response),
+            cases = ["A", "B", "C", "D"];
+        cases.forEach(function(c) {
+          var el = document.getElementById(c),
+              percent = data[c].successful/data[c].total*100 || 0;
+          el.style.width = percent + "%";
+          el = document.getElementById(c + "-status");
+          el.innerText = percent + " %";
+        });
+      }
+
+      var xhReq = new XMLHttpRequest();
+      xhReq.onreadystatechange = function() {
+        if (xhReq.readyState != 4) return;
+        processData(xhReq.responseText);
+      };
+      xhReq.open("GET", "/stats", true);
+      xhReq.send(null);
+    </script>
+
+  </body>
+
+</html>
