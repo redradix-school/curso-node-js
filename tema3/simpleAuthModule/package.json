@@ -1,0 +1,14 @@
+{
+  "name": "redradix-nodejs-simpleauth",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "*",
+    "lodash": "*",
+    "morgan": "*",
+    "body-parser": "*",
+    "method-override": "*",
+    "cookie-parser": "*",
+    "cookie-session": "*"
+  }
+}
