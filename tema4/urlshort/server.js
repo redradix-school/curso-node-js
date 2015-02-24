@@ -7,7 +7,6 @@ var express = require("express"),
 
 Q.longStackSupport = true;
 
-app.use(require("static-favicon")());
 app.use(require("body-parser")());
 app.use(require("method-override")());
 app.use(require("cookie-parser")("secreto"));
