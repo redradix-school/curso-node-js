@@ -313,5 +313,5 @@ app.listen(3000);
 
 /* Populate */
 
-var admin = new User({username: "eliasagc@gmail.com", password: "asdf"});
+var admin = new User({username: "node@redradix.com", password: "redradix"});
 admin.save().done();

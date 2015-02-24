@@ -11,8 +11,8 @@ var express = require("express")
 var users = [
   {
     id: 0,
-    username: "uno@test.com",
-    pass: "asdf"
+    username: "node@redradix.com",
+    pass: "redradix"
   }
 ]
 

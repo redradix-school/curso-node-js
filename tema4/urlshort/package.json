@@ -8,7 +8,6 @@
     "express": "*",
     "hiredis": "*",
     "redis": "*",
-    "static-favicon": "*",
     "body-parser": "*",
     "method-override": "*",
     "cookie-parser": "*",
