@@ -1,18 +1,17 @@
-var express = require("express"),
-    app = express();
+var express = require("express")
+    , app = express()  
+    , logger = require("morgan")
+    , bodyParser = require("body-parser")
+    , cookieParser = require("cookie-parser")
+    , cookieSession = require("cookie-session")
 
-app.configure(function() {
-  app.use(express.favicon());
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(express.cookieParser("secreto"));
-  app.use(express.cookieSession({secret: "asdf"}));
-  app.engine("jade", require("jade").__express);
-  app.set("views", "./views");
-  app.set("view engine", "jade");
-  app.use(app.router);
-  app.use(express.static(__dirname + "/public"));
-})
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(cookieParser("secreto"));
+app.use(cookieSession({secret: "asdf"}));
+app.set("views", "./views");
+app.set("view engine", "jade");
+app.use(express.static(__dirname + "/public"));
 
 function extend() {
   var args = [].slice.call(arguments);
@@ -94,5 +93,5 @@ app.listen(3000);
 var post = new Post({title: "Prueba", content: "Esto es una prueba"});
 post.save();
 
-var admin = new User({email: "admin@asdf.com", password: "asdf"});
+var admin = new User({email: "node@redradix.com", password: "redradix"});
 admin.save();

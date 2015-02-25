@@ -1,13 +1,14 @@
-var express = require("express"),
-    app = express();
+var express = require("express")
+    , app = express()  
+    , logger = require("morgan")
+    , bodyParser = require("body-parser")
+    , cookieParser = require("cookie-parser")
+    , cookieSession = require("cookie-session")
 
-
-app.use(express.favicon());
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(express.cookieParser("secreto"));
-app.use(express.cookieSession({secret: "asdf"}));
-app.engine("jade", require("jade").__express);
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(cookieParser("secreto"));
+app.use(cookieSession({secret: "asdf"}));
 app.set("views", "./views");
 app.set("view engine", "jade");
 

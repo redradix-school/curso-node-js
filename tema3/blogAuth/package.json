@@ -3,7 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "jade": "*",
-    "express": "*"
+    "express": "*",
+    "lodash": "*",
+    "morgan": "*",
+    "body-parser": "*",
+    "method-override": "*",
+    "cookie-parser": "*",
+    "cookie-session": "*"
   }
 }

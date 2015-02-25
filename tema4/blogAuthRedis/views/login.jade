@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    section.login.container
+      h1.section-title Login
+      form.login-form(action="/session", method="POST")
+        label(for='email') email
+        input.email(type='email', name='username')
+        label(for='password') contraseña
+        input.password(type='password', name='password')
+        input.button.login(type='submit', value='Login')
+
+    section.register
+      a(href="/register") Registrate

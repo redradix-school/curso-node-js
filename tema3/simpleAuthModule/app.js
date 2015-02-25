@@ -18,13 +18,25 @@ var users = [
 
 auth.setStrategy({
   serializeUser: function(user) {
-
+    return user.username;
   },
   deserializeUser: function(userId, cb) {
-
+    var user = users.map(function(u) {
+      if (u.username === userId) {
+        return u;
+      }
+    })[0];
+    user ? cb(null, user) : cb(404);
   },
   checkCredentials: function(username, pass, cb) {
-
+    var user = users.map(function(u) {
+      console.log(u);
+      if (u.username === username && u.pass === pass) {
+        return u;
+      }
+    })[0];
+    console.log('user', user)
+    user ? cb(null, user) : cb(404);
   },
   loginRoute: "/login.html"
 })
@@ -35,8 +47,6 @@ app.set('port', process.env.PORT || 3000)
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
-
-
 app.use(cookieParser('secret'))
 app.use(cookieSession({keys: ['secret']}))
 
