@@ -9,8 +9,9 @@
     "hiredis": "*",
     "jade": "*",
     "method-override": "*",
+    "node-uuid": "^1.4.3",
     "q": "*",
     "redis": "^2.1.0",
-    "static-favicon": "*"
+    "serve-favicon": "^2.3.0"
   }
 }

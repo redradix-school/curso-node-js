@@ -6,14 +6,19 @@ var express = require("express"),
     Q = require("q"),
     redis = require("redis"),
     client = redis.createClient(),
-    op = Q.ninvoke.bind(Q, client),
+    //op = Q.ninvoke.bind(Q, client),
+    uuid = require('node-uuid'),
     auth = require("./simpleAuth");
+
+//middleware
+var bodyParser = require('body-parser'),
+    methodOverride = require('method-override');
 
 Promise.promisifyAll(client);
 
-app.use(require("static-favicon")());
-app.use(require("body-parser")());
-app.use(require("method-override")());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+app.use(methodOverride('_method'));
 app.set("views", "./views");
 app.set("view engine", "jade");
 
@@ -28,13 +33,70 @@ function extend() {
 /* Models */
 
 var postsKey = "blog:posts";
+//versión con LISTA REDIS
+// var postsController = {
+//   index: function(req, res) {
+//     client.lrangeAsync(postsKey, 0, -1)
+//       .then(function(posts) {
+//         posts = posts.map(JSON.parse);
+//         res.render("post-list", {posts: posts});
+//       });
+//   },
+//   show: function(req, res) {
+//     res.render("post-detail", {post: req.post});
+//   },
+//   "new": function(req, res) {
+//     res.render("new-post", {post: {}});
+//   },
+//   create: function(req, res) {
+//     var post = {title: req.body.title, content: req.body.content};
+//     client.llenAsync(postsKey)
+//       .then(function(len) {
+//         post.id = len;
+//         return client.rpushAsync(postsKey, JSON.stringify(post));
+//       })
+//       .then(function() {
+//         res.redirect('/posts/' + post.id);
+//       });
+//   },
+//   edit: function(req, res) {
+//     res.render("new-post", {post: req.post});
+//   },
+//   update: function(req, res) {
+//     req.post.title = req.body.title;
+//     req.post.content = req.body.content;
 
+//     client.lsetAsync(postsKey, req.post.id, JSON.stringify(post))
+//       .then(function() {
+//         res.render("post-detail", {post: post});
+//       });
+//   },
+//   "delete": function(req, res) {
+//     //no podemos eliminar por valor!!!
+//     res.redirect("/posts");
+//   },
+//   param: function(req, res, next, postId) {
+//     client.lindexAsync(postsKey, postId)
+//       .then(function(post) {
+//         req.post = JSON.parse(post);
+//         next();
+//       });
+//   }
+// };
+
+//versión con SET REDIS con IDs y elementos individuales blog:posts:ID
 var postsController = {
   index: function(req, res) {
-    client.lrangeAsync(postsKey, 0, -1)
+    client.zrevrangeAsync(postsKey, 0, -1)
+      .then(client.mgetAsync.bind(client))
       .then(function(posts) {
-        posts = posts.map(JSON.parse);
+        posts = posts.map(JSON.parse).filter(function(p){ return p !== null });
         res.render("post-list", {posts: posts});
+      })
+      .catch(function(err){
+        //no hay posts
+        console.log('Error en index', err);
+        res.render("post-list", {posts: [] });
       });
   },
   show: function(req, res) {
@@ -44,34 +106,46 @@ var postsController = {
     res.render("new-post", {post: {}});
   },
   create: function(req, res) {
-    var post = {title: req.body.title, content: req.body.content};
-    client.llenAsync(postsKey)
-      .then(function(len) {
-        post.id = len;
-        return client.rpushAsync(postsKey, JSON.stringify(post));
+    var post = {title: req.body.title, content: req.body.content, id: uuid.v1(), date: +new Date() };
+    var redisId = postsKey+':'+post.id;
+    console.log('CREATE POST');
+    //guardamos el post en blog:posts:id
+    client.setAsync(redisId, JSON.stringify(post))
+      .then(function(value){
+        //guardamos el ID
+        return client.zaddAsync(postsKey, +new Date(), redisId)
       })
-      .then(function() {
-        res.redirect('/posts/' + post.id);
+      .then(function(value){
+        res.redirect('/posts/');
       });
   },
   edit: function(req, res) {
     res.render("new-post", {post: req.post});
   },
   update: function(req, res) {
+    console.log('UPDATE POST');
     req.post.title = req.body.title;
     req.post.content = req.body.content;
 
-    client.lsetAsync(postsKey, req.post.id, JSON.stringify(post))
+    client.setAsync(postsKey + ':' + req.post.id, JSON.stringify(req.post))
       .then(function() {
-        res.render("post-detail", {post: post});
+        res.render("post-detail", {post: req.post});
       });
   },
   "delete": function(req, res) {
-    //no podemos eliminar por valor!!!
-    res.redirect("/posts");
+    console.log('DELETE POST');
+    var postId = postsKey + ':' + req.post.id;
+    //ahora si podemos eliminar el post y quitar su ID de la lista de posts
+    client.delAsync(postId)
+      .then(function(){
+        return client.zrem(postsKey, postId);
+      })
+      .then(function(){
+        res.redirect("/posts");
+      });
   },
   param: function(req, res, next, postId) {
-    client.lindexAsync(postsKey, postId)
+    client.getAsync(postsKey + ':' + postId)
       .then(function(post) {
         req.post = JSON.parse(post);
         next();

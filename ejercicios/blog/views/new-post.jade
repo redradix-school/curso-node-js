@@ -2,12 +2,12 @@ extends layout
 
 block content
   section.new-post.container
-    h1.section-title= post.date? "Editar Post" : "Nuevo Post"
-    form.new-post-form(action=post.date? "/posts/#{post.id}":"/posts", method="POST")
+    h1.section-title= post.id? "Editar Post" : "Nuevo Post"
+    form.new-post-form(action=post.id? "/posts/#{post.id}?_method=PUT" : "/posts", method="POST")
       label(for='title') Título
       input.title(type='text', name='title', value=post.title)
       label(for='post-title') Contenido
       textarea.post-content(name='content', placeholder='')= post.content
-      if post.date
-        input(type="hidden",name="_method",value="put")
+      if post.id
+        input(type="hidden",name="_method",value="PUT")
       input.button(type='submit', value='Publicar')

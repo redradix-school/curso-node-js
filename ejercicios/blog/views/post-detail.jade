@@ -8,8 +8,8 @@ block nav
       li
         a(href='/posts/#{post.id}/edit') Editar
       li
-        form(action="/posts/#{post.id}",method="POST",id="form-delete")
-          input(type="hidden",name="_method",value="delete")
+        form(action="/posts/#{post.id}?_method=DELETE",method="POST",id="form-delete")
+          input(type="hidden",name="_method",value="DELETE")
         a(href='#',onclick="document.getElementById('form-delete').submit()") Eliminar
 
 block content
