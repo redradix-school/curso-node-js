@@ -2,18 +2,20 @@
 
 var express = require("express"),
     app = express(),
+    Promise = require("bluebird"),
     Q = require("q"),
     redis = require("redis"),
     client = redis.createClient(),
     op = Q.ninvoke.bind(Q, client),
     auth = require("./simpleAuth");
 
+Promise.promisifyAll(client);
+
 app.use(require("static-favicon")());
 app.use(require("body-parser")());
 app.use(require("method-override")());
-app.engine("jade", require("jade").__express);
 app.set("views", "./views");
-app.set("viewy engine", "jade");
+app.set("view engine", "jade");
 
 function extend() {
   var args = [].slice.call(arguments);
@@ -29,7 +31,7 @@ var postsKey = "blog:posts";
 
 var postsController = {
   index: function(req, res) {
-    op("lrange", postsKey, 0, -1)
+    client.lrangeAsync(postsKey, 0, -1)
       .then(function(posts) {
         posts = posts.map(JSON.parse);
         res.render("post-list", {posts: posts});
@@ -43,15 +45,14 @@ var postsController = {
   },
   create: function(req, res) {
     var post = {title: req.body.title, content: req.body.content};
-    op("llen", postsKey)
+    client.llenAsync(postsKey)
       .then(function(len) {
         post.id = len;
-        return op("rpush", postsKey, JSON.stringify(post));
+        return client.rpushAsync(postsKey, JSON.stringify(post));
       })
       .then(function() {
-        res.render("post-detail", {post: post});
-      })
-      .done();
+        res.redirect('/posts/' + post.id);
+      });
   },
   edit: function(req, res) {
     res.render("new-post", {post: req.post});
@@ -59,23 +60,22 @@ var postsController = {
   update: function(req, res) {
     req.post.title = req.body.title;
     req.post.content = req.body.content;
-    op("lset", postsKey, req.post.id, JSON.stringify(post))
+
+    client.lsetAsync(postsKey, req.post.id, JSON.stringify(post))
       .then(function() {
         res.render("post-detail", {post: post});
-      })
-      .done();
+      });
   },
   "delete": function(req, res) {
-
+    //no podemos eliminar por valor!!!
     res.redirect("/posts");
   },
   param: function(req, res, next, postId) {
-    op("lindex", postsKey, postsId)
+    client.lindexAsync(postsKey, postId)
       .then(function(post) {
         req.post = JSON.parse(post);
         next();
-      })
-      .done();
+      });
   }
 };
 
@@ -112,5 +112,5 @@ app.listen(3000);
 
 /* Populate */
 
-var post = new Post({title: "Prueba", content: "Esto es una prueba"});
-post.save();
+// var post = new Post({title: "Prueba", content: "Esto es una prueba"});
+// post.save();

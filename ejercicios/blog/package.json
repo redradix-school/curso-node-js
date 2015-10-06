@@ -3,12 +3,14 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "jade": "*",
-    "express": "*",
-    "static-favicon": "*",
+    "bluebird": "^2.10.2",
     "body-parser": "*",
-    "method-override": "*",
+    "express": "*",
     "hiredis": "*",
-    "q": "*"
+    "jade": "*",
+    "method-override": "*",
+    "q": "*",
+    "redis": "^2.1.0",
+    "static-favicon": "*"
   }
 }

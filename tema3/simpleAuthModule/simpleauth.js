@@ -1,6 +1,6 @@
 var _ = require("lodash")
 
-strategy = {
+var strategy = {
   serializeUser: function(user) {
   },
   deserializeUser: function(userId, cb) {
@@ -26,11 +26,12 @@ exports.createSession = function(options) {
 	config = _.extend({}, defaultConfig, options);
 	return function(req, res, next) {
 		var username = req.body[config.username],
-			password = req.body[config.password];
+        password = req.body[config.password];
+
 		strategy.checkCredentials(username, password, function(err, user) {
 			if (user && !err) {
 				res.cookie(cookieName, strategy.serializeUser(user), {signed: true, maxAge: 1000*60*60*24*7});
-				res.redirect(config.redirect);	
+				res.redirect(config.redirect);
 			} else {
 				console.log("error al checkear credenciales");
 				res.redirect(config.failRedirect);
