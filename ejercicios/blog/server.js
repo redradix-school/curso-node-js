@@ -30,6 +30,7 @@ function extend() {
   });
 }
 
+
 /* Models */
 
 var postsKey = "blog:posts";
