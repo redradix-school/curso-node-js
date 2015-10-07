@@ -4,59 +4,39 @@ var auth = require('../simpleauth');
 var Post = require('../models').post;
 
 var postsController = {
+  // GET /?s=hottest|recent[&page=n]
+  // Devuelve la lista de posts ordenada según la sección y paginada
   index: function(req, res) {
-    Post.getPostsBySection(req.query.s, req.query.page).then(function(posts){
-      res.send(posts);
-    });
+    // TODO
   },
+  // GET /xxxxxx
+  // Devuelve los datos de un post concreto
   show: function(req, res) {
-    res.send(req.post);
+    // TODO
   },
+  // POST /
+  // guarda un nuevo post
   create: function(req, res) {
     var postData = req.body;
-    //set the user who created it
-    postData.user = req.user;
-    postData.date = Date.now();
-
-    Post.save(postData).then(function(newPost){
-      res.status(201).send(newPost);
-    });
+    // TODO:
+    // guardar el usuario que lo crea como documento incrustado user
+    // generar la fecha actual
+    // guardar el Post y devolverlo como respuesta
   },
+  // Actualizar un post (no se usa)
   update: function(req, res) {
-    Post.save(req.body).then(function(post){
-      console.log('Post updated', post);
-      res.status(200).send(post);
-    })
   },
+  // Borrar un post (no se usa)
   "delete": function(req, res) {
-
   },
+  // Añadir un voto positivo o negativo a un post
   vote: function(req, res) {
-    //ya tenemos el post en req.post
-    var updatedPost = req.post;
-    console.log('Voting on', req.post);
-    if(req.params.vote === 'up'){
-      updatedPost.votes++;
-    }
-    if(req.params.vote === 'down'){
-      updatedPost.votes--;
-    }
-    Post.save(updatedPost).then(function(post){
-      res.status(200).send(post);
-    });
+    // TODO: decidir si sumamos o restamos voto y guardar el post
   },
+  // Lee de BBDD un Post a partir del postId
   param: function(req, res, next, postId) {
-    Post.getById(postId).then(function(post){
-      console.log('Post param', post);
-      if(post){
-        req.post = post;
-        next();
-      }
-      else {
-        res.status(404).end();
-      }
-    })
-  }
+    // TODO: leer el Post y guardarlo en req.post
+    // o devolver un 404 si no existe
 };
 
 var router = express.Router();

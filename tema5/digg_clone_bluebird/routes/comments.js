@@ -5,59 +5,27 @@ var Comment = require('../models/comment');
 var Post = require('../models/post');
 
 var commentsController = {
+  // GET /?post_id=xxxxxx
   index: function(req, res) {
-    var postId = req.query.post_id;
-    Comment.getByPostId(postId).then(function(comments){
-      res.send(comments);
-    });
+    // TODO: traer comentarios para un Post concreto
+    res.send([]);
   },
+  // Guarda un nuevo comentario en la colección
+  // y debería sumar un comentario al Post en cuestión
   create: function(req, res) {
     console.log('Create comment', req.body);
-    //cargar el post primero para ver si existe
-    Post.getById(req.body.post_id).then(function(post){
-      if(!post){
-        return res.status(404).end();
-      }
-      var newComment = req.body;
-      newComment.date = Date.now();
-      newComment.user = {
-        name: req.user.name,
-        id: req.user.id
-      }
-      delete newComment.token;
-      Comment.save(newComment).then(function(comment){
-        //tengo que sumar comentario al post
-        post.ncomments++;
-        Post.save(post).then(function(post){
-          res.status(201).send(comment);
-        });
-      })
-      .catch(function(err){
-        console.log('Error saving comment', err);
-        res.status(400).end();
-      });
-    })
-    .catch(function(err){
-      res.status(404);
-    })
-
+    // TODO: cargar el post primero para ver si existe
+    // y si es así, creamos el comentario y actualizamos el Post
   },
+  // Suma 1 al número de votos de un comentario
   vote: function(req, res) {
-    req.comment.votes++;
-    Comment.save(req.comment).then(function(comment){
-      res.send(comment);
-    });
+    // TODO: actualizar votos y guardar comentario
   },
+  // Lee de BBDD un comentario a partir de su id
+  // y lo almacena en req.comment para el resto de middlewares
   param: function(req, res, next, commentsId) {
-    Comment.getById(commentsId).then(function(comment){
-      if(comment){
-        req.comment = comment;
-        next();
-      }
-      else {
-        res.status(404).end();
-      }
-    })
+    // TODO: cargar un comentario a partir de su id
+    // si no existe, devolver un 404 not found - res.status(404).end()
   }
 };
 

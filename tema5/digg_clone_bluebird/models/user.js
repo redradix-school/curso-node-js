@@ -3,11 +3,11 @@ var utils = require('./utils');
 var User = {
   checkCredentials: function(email, password) {
     var collection = utils.collection('users');
-    return collection.find({ email: email, password: password }).limit(1).toArrayAsync();
+    //TODO: encontrar un usuario con el email y password y devolver la promesa
   },
   getUserByToken: function(token){
     var collection = utils.collection('users');
-    return collection.findOneAsync({ token: token });
+    // TODO: encontrar un usuario a partir del token
   },
   save: function(userdata){
     var collection = utils.collection('users');

@@ -8,23 +8,16 @@ var Post = {
   getPostsBySection: function(section, page){
     var page = page || 0;
     var collection = utils.collection(COLNAME);
-    var cursor = collection.find({}).limit(PAGE_SIZE).skip(PAGE_SIZE*(page));
-    switch(section){
-    case 'hottest':
-      cursor = cursor.sort([['votes', -1]]);
-      break;
-    case 'latest':
-      cursor = cursor.sort([['date', -1]]);
-    }
-    return cursor.toArrayAsync();
+    // TODO: devolver los Posts correspondientes a la página y ordenados según la sección
+    // limit(PAGE_SIZE).skip(PAGE_SIZE*page)
   },
   getById: function(id){
     var collection = utils.collection(COLNAME);
+    //devolver un Post por su ID
     return collection.findOneAsync({ _id: ObjectID(id)});
   },
   save: function(post){
-    var collection = utils.collection(COLNAME);
-    return collection.saveAsync(post);
+    //TODO: guardar un post
   },
 }
 

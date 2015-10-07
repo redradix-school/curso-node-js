@@ -4,6 +4,7 @@ var auth = require('../simpleauth');
 var User = require('../models/user');
 
 var usersController = {
+  //Crea un nuevo usuario (registro)
   create: function(req, res) {
     console.log('Register user', req.body);
     if(req.body.password !== req.body.passwordconfirm){
@@ -21,9 +22,12 @@ var usersController = {
        })
     }
   },
+  //Devuelve la información del usuario
+  //req.user está ya en request (por simpleAuth)
   me: function(req, res) {
     res.status(200).send(req.user);
   },
+  //Devuelve la información del usuario
   login: function(req, res) {
     res.status(200).send(req.user);
   }
