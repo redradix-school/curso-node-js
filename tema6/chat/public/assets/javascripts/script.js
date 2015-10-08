@@ -17,7 +17,7 @@ var Chat = {
         .replace("%avatar%", from.avatar)
         .replace("%name%", from.name)
         .replace("%content%", msg.text)
-        .replace("%time%", msg.date);
+        .replace("%time%", new Date(msg.date).toLocaleTimeString());
     var $messages = $(".messages").append(code);
     $("body").stop().animate({ scrollTop: $messages.height() }, 400);
   },
@@ -27,11 +27,20 @@ var Chat = {
         .replace("%avatar%", from.avatar)
         .replace("%name%", from.name)
         .replace("%content%", msg.text)
-        .replace("%time%", msg.date);
+        .replace("%time%", new Date(msg.date).toLocaleTimeString());
     var $messages = $(".messages").append(code);
     $("body").stop().animate({ scrollTop: $messages.height() }, 400);
   }
 };
+
+//handles sending messages with <ENTER> key
+$("textarea.js-input").keyup(function(e){
+  if(e.keyCode === 13 && !e.shiftKey){
+    e.preventDefault();
+    $("form.new-message").submit();
+  }
+});
+
 
 $("form.new-message").submit(function(e) {
   e.preventDefault();
