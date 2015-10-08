@@ -37,6 +37,7 @@ var postsController = {
   param: function(req, res, next, postId) {
     // TODO: leer el Post y guardarlo en req.post
     // o devolver un 404 si no existe
+  }
 };
 
 var router = express.Router();
