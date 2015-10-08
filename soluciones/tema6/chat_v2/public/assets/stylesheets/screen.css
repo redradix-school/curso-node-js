@@ -1,0 +1,132 @@
+/* MIXINS
+*/
+/* FONTS
+*/
+/* COLORS
+*/
+/* NORMALIZE
+*/
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section, summary { display: block; }
+
+* { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+
+html { font-family: sans-serif; font-size: 62.5%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body { margin: 0; font-family: "Roboto", Helvetica, Arial, sans-serif; font-size: 18px; font-size: 1.8rem; color: #505050; line-height: normal; background: #f1f1f1; }
+
+a { color: #fe6963; text-decoration: none; }
+
+a:hover { color: #2a3644; }
+
+a:active, a:hover { outline: 0; }
+
+h1, h2, h2, h3, h4, h6 { margin: 0; font-size: 1em; font-weight: 700; color: #505050; }
+
+b, strong { font-weight: normal; }
+
+p { margin: 0; padding: 0 0 8px; line-height: 1.2; }
+
+::selection { background: #fe6963; color: #FFF; }
+
+::-moz-selection { background: #fe6963; color: #FFF; }
+
+ul, ol, dl, dd { list-style: none; margin: 0; padding: 0; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; max-width: 100%; height: auto; }
+
+iframe { max-width: 100%; }
+
+figure { margin: 0; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+
+/* LAYOUT
+*/
+.wrapper { position: relative; width: 900px; margin: 0 auto; }
+
+#masthead { background: #2a3644; padding: 18px 0; }
+#masthead h1 { color: #fe6963; font-size: 34px; font-size: 3.4rem; font-weight: 700; }
+
+.actions { background: #3e5064; padding: 20px 0; }
+.actions:after { content: "."; display: block; height: 0; overflow: hidden; clear: both; zoom: 1; }
+.actions .button { float: right; }
+.actions form { clear: both; display: none; }
+.actions form label { color: #fff; }
+.actions.active form { display: block; }
+
+.list { margin: 20px 0; }
+.list li { background: #fff; margin-bottom: 8px; }
+.list a { position: relative; display: block; color: #505050; padding: 18px 72px 18px 16px; overflow: hidden; }
+.list .avatar { max-width: 80px; float: left; margin-right: 12px; }
+.list h2 { color: #212b35; font-size: 28px; font-size: 2.8rem; font-weight: 700; margin-bottom: 8px; }
+.list p { padding-left: 92px; }
+.list .time { position: absolute; top: 14px; right: 14px; color: #666; }
+.list .new { display: block; position: absolute; bottom: 18px; right: 14px; color: #fff; padding: 4px 12px; background: #fe6963; -webkit-border-radius: 50px; -moz-border-radius: 50px; -ms-border-radius: 50px; -o-border-radius: 50px; border-radius: 50px; font-weight: 700; font-size: 20px; font-size: 2rem; }
+
+#sala .messages { padding: 20px 20px 30px; margin-bottom: 200px; }
+#sala .messages:after { content: "."; display: block; height: 0; overflow: hidden; clear: both; zoom: 1; }
+#sala .date { text-align: center; margin: 20px 0; font-style: italic; color: #2a3644; }
+#sala .message { clear: both; position: relative; width: 80%; margin: 14px 0 14px 20px; }
+#sala .message .avatar { max-width: 70px; margin-right: 14px; margin-bottom: 14px; -webkit-border-radius: 50px; -moz-border-radius: 50px; -ms-border-radius: 50px; -o-border-radius: 50px; border-radius: 50px; }
+#sala .message .content { clear: both; position: relative; background: #fff; padding: 16px; -webkit-border-radius: 8px; -moz-border-radius: 8px; -ms-border-radius: 8px; -o-border-radius: 8px; border-radius: 8px; }
+#sala .message .content:after { content: ''; border-left: 12px solid transparent; border-right: 12px solid transparent; border-bottom: 12px solid white; position: absolute; top: -10px; left: 3%; }
+#sala .message .name { font-size: 22px; font-size: 2.2rem; font-weight: 700; color: #fe6963; margin-bottom: 8px; line-height: 1; }
+#sala .message p { line-height: 1.3; }
+#sala .message .time { display: block; color: #999; text-align: right; font-size: 16px; font-size: 1.6rem; }
+#sala .message.me { float: right; margin: 14px 20px 14px 0; }
+#sala .message.me .avatar { float: right; margin: 0 0 14px; }
+#sala .message.me .content:after { left: auto; right: 3%; }
+#sala .new-message { clear: both; background: #3e5064; overflow: hidden; padding: 20px; position: fixed; left: 0; bottom: 0; width: 100%; }
+#sala .new-message .button { float: right; }
+#sala .new-message label { color: #fff; }
+#sala .connected { background: #3E5064; padding: 14px; }
+#sala .connected h2 { color: #fff; font-size: 16px; font-size: 1.6rem; margin-bottom: 8px; }
+#sala .connected ul { overflow: hidden; }
+#sala .connected ul li { background: #fff; padding: 6px; float: left; margin: 0 4px; font-size: 15px; font-size: 1.5rem; }
+#sala .connected ul li img { max-width: 30px; }
+
+/* CLASSES
+*/
+.hide { display: none; }
+
+.clear { clear: both; }
+
+/* ICONS
+*/
+.icon { display: inline-block; vertical-align: middle; font-family: 'doventiaIcons'; font-weight: normal; font-style: normal; font-variant: normal; text-transform: none; line-height: 1; speak: none; overflow: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+/* BUTTONS
+*/
+.button { display: inline-block; font-size: 20px; font-size: 2rem; background: #fe6963; color: #fff; font-weight: 700; text-transform: uppercase; padding: 8px 24px; text-align: center; border: none; cursor: pointer; }
+.button:hover { background: #fe6963; }
+
+/* FORMS
+*/
+form { margin: 0; }
+
+fieldset { border: none; margin: 0; padding: 0; }
+
+button, input { -webkit-appearance: none; -webkit-border-radius: 0; -moz-border-radius: 0; -ms-border-radius: 0; -o-border-radius: 0; border-radius: 0; }
+
+button[disabled], input[disabled] { cursor: default; }
+
+textarea { overflow: auto; vertical-align: top; }
+
+label { display: block; margin-bottom: 6px; font-size: 20px; font-size: 2rem; color: #212b35; }
+
+input, textarea { background: #f8f8f8; border: none; border-bottom: 3px solid gainsboro; font-family: "Roboto", Helvetica, Arial, sans-serif; font-size: 18px; font-size: 1.8rem; padding: 10px 12px; color: #505050; width: 100%; margin-bottom: 16px; }
+input:focus, textarea:focus { border-color: #2a3644; }
+
+input[type="checkbox"], input[type="radio"] { width: auto; }
+
+select { background: #fafafa; border: none; padding: 10px 12px; color: #505050; width: 100%; }
+
+/* LOGIN
+*/
+body.login { background: #2a3644; }
+
+#login { width: 600px; background: #fff; margin: 100px auto 0; padding: 40px; -webkit-border-radius: 6px; -moz-border-radius: 6px; -ms-border-radius: 6px; -o-border-radius: 6px; border-radius: 6px; }
+#login:after { content: "."; display: block; height: 0; overflow: hidden; clear: both; zoom: 1; }
+#login .button { float: right; }
+#login h1 { font-size: 36px; font-size: 3.6rem; line-height: 1; margin-bottom: 21px; text-align: center; text-transform: uppercase; color: #2a3644; }
+#login p { clear: both; padding: 30px 0 0; font-size: 20px; font-size: 2rem; text-align: center; }
